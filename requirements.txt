@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 Django>=5.2.3
 psycopg2-binary>=2.9.10
+=======
+Django>=5.2.3
+psycopg2-binary>=2.9.10
+>>>>>>> 937ef126fd162bf57f9c73fc7b4e6ce214f973fa
 tailwindcss 
