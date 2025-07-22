@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block title %}Logged Out | Tripease{% endblock %} {% block content %}
+<div class="max-w-lg mx-auto py-24 text-center animate__animated animate__fadeIn">
+    <div class="bg-white rounded-lg shadow p-10">
+        <i class="fa-solid fa-right-from-bracket text-4xl text-red-500 mb-4"></i>
+        <h1 class="text-3xl font-bold mb-4 text-gray-800">You have been logged out</h1>
+        <p class="text-lg text-gray-600 mb-6">Thank you for using Tripease. We hope to see you again soon!</p>
+        <a href="/authentication/login/" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded shadow font-semibold transition-all">Login Again</a>
+    </div>
+</div>
+{% endblock %}

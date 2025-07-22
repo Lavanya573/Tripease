@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block title %}Book Holiday | Tripease{% endblock %} {% block content %}
+<div class="max-w-xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">Book Holiday</h1>
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-2">Holiday Details</h2>
+        <p><strong>Name:</strong> {{ package.name }}</p>
+        <p><strong>Destination:</strong> {{ package.destination }}</p>
+        <p><strong>Description:</strong> {{ package.description }}</p>
+        <p><strong>Duration:</strong> {{ package.duration_days }} days</p>
+        <p><strong>Price:</strong> ${{ package.price }}</p>
+
+        <form method="post" class="mt-6">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="tour_date" class="block text-gray-700 font-semibold mb-2">Tour Date</label>
+                <input type="date" name="tour_date" id="tour_date" class="w-full px-3 py-2 border rounded-lg" required>
+            </div>
+            <div class="mb-4">
+                <label for="num_people" class="block text-gray-700 font-semibold mb-2">Number of People</label>
+                <input type="number" name="num_people" id="num_people" class="w-full px-3 py-2 border rounded-lg" required min="1">
+            </div>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow">Book Now</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %} {% block title %}Payment | Tripease{% endblock %} {% block content %}
+<div class="max-w-2xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6 text-center">Payment</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+            {% if rooms %}
+            <h3 class="font-semibold mt-2 mb-1">Rooms</h3>
+            <ul class="mb-2">
+                {% for room in rooms %}
+                <li>Room {{ room.number }} ({{ room.room_type }}, {{ room.city }})</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% if cabs %}
+            <h3 class="font-semibold mt-2 mb-1">Cabs</h3>
+            <ul class="mb-2">
+                {% for cab in cabs %}
+                <li>{{ cab.name }} ({{ cab.from_city }} → {{ cab.to_city }})</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% if trains %}
+            <h3 class="font-semibold mt-2 mb-1">Trains</h3>
+            <ul class="mb-2">
+                {% for train in trains %}
+                <li>{{ train.name }} ({{ train.from_city }} → {{ train.to_city }})</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% if holidays %}
+            <h3 class="font-semibold mt-2 mb-1">Holidays</h3>
+            <ul class="mb-2">
+                {% for holiday in holidays %}
+                <li>{{ holiday.name }} ({{ holiday.destination }})</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% if flights %}
+            <h3 class="font-semibold mt-2 mb-1">Flights</h3>
+            <ul class="mb-2">
+                {% for flight in flights %}
+                <li>{{ flight.airline }} {{ flight.flight_number }} ({{ flight.from_city }} → {{ flight.to_city }}) - ₹{{ flight.price }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% if not rooms and not cabs and not trains and not holidays %}
+            <p>Your cart is empty.</p>
+            {% endif %}
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Your Details</h2>
+            <p><strong>Name:</strong> {{ user.get_full_name|default:user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Payment Method</h2>
+            <div class="flex flex-col gap-3">
+                <label class="flex items-center gap-2">
+                    <input type="radio" name="payment_method" value="card" required>
+                    <i class="fa-solid fa-credit-card text-blue-600"></i> Credit/Debit Card
+                </label>
+                <label class="flex items-center gap-2">
+                    <input type="radio" name="payment_method" value="upi">
+                    <i class="fa-brands fa-google-pay text-green-600"></i> UPI
+                </label>
+                <label class="flex items-center gap-2">
+                    <input type="radio" name="payment_method" value="netbanking">
+                    <i class="fa-solid fa-building-columns text-purple-600"></i> Net Banking
+                </label>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="px-8 py-3 bg-green-600 text-white rounded hover:bg-green-700 font-semibold text-lg transition-colors">Confirm & Pay</button>
+        </div>
+    </form>
+</div>
+{% if request.method == 'POST' %}
+<div class="max-w-xl mx-auto py-12 text-center">
+    <h2 class="text-2xl font-bold mb-4">Scan to Pay</h2>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=tripease@upi&am=1000" alt="QR Code" class="mx-auto mb-4">
+    <p class="text-lg font-semibold">Amount: <span class="text-green-700">₹1000</span></p>
+    <a href="/hotel/cart/" class="inline-block mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors font-semibold">Back to Cart</a>
+</div>
+{% endif %} {% endblock %}

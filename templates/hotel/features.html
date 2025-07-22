@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block title %}Features | Tripease{% endblock %} {% block content %}
+<div class="max-w-7xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold text-center mb-10 text-blue-800">Tripease Features</h1>
+    <div class="flex flex-col md:flex-row gap-6 justify-between items-stretch mb-8">
+        <!-- Offers Carousel -->
+        <div class="flex-1 bg-gradient-to-br from-blue-700 via-cyan-400 to-emerald-400 rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center animate__animated animate__zoomIn animate__delay-1s">
+            <span class="inline-block animate-spin-slow bg-gradient-to-tr from-blue-400 to-cyan-300 rounded-full p-4 mb-3 shadow-lg">
+                <i class="fa-solid fa-tags text-4xl text-white"></i>
+            </span>
+            <h2 class="text-2xl font-extrabold text-white mb-2 tracking-wide drop-shadow">Offers Carousel</h2>
+        </div>
+        <!-- Popular Destinations -->
+        <div class="flex-1 bg-gradient-to-br from-emerald-400 via-cyan-300 to-blue-600 rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center animate__animated animate__fadeInUpBig animate__delay-2s">
+            <span class="inline-block animate-bounce bg-gradient-to-tr from-cyan-400 to-emerald-300 rounded-full p-4 mb-3 shadow-lg">
+                <i class="fa-solid fa-location-dot text-4xl text-white"></i>
+            </span>
+            <h2 class="text-2xl font-extrabold text-white mb-2 tracking-wide drop-shadow">Popular Destinations</h2>
+        </div>
+        <!-- App Download -->
+        <div class="flex-1 bg-gradient-to-br from-cyan-500 via-blue-700 to-emerald-400 rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center animate__animated animate__lightSpeedInRight animate__delay-3s">
+            <span class="inline-block animate-pulse bg-gradient-to-tr from-blue-500 to-emerald-400 rounded-full p-4 mb-3 shadow-lg">
+                <i class="fa-solid fa-mobile-screen-button text-4xl text-white"></i>
+            </span>
+            <h2 class="text-2xl font-extrabold text-white mb-2 tracking-wide drop-shadow">App Download</h2>
+        </div>
+    </div>
+</div>
+<style>
+    @keyframes spin-slow {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .animate-spin-slow {
+        animation: spin-slow 3s linear infinite;
+    }
+</style>
+{% endblock %}

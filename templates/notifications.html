@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block title %}Notifications | Tripease{% endblock %} {% block content %}
+<h1 class="text-3xl font-bold mb-6">🔔 Notifications</h1>
+<ul class="space-y-4">
+    <li class="bg-blue-50 border-l-4 border-blue-400 p-4 flex items-center gap-3 rounded">
+        <i class="fa-solid fa-plane text-blue-500 text-xl"></i>
+        <span>Your flight booking to Goa is confirmed!</span>
+    </li>
+    <li class="bg-green-50 border-l-4 border-green-400 p-4 flex items-center gap-3 rounded">
+        <i class="fa-solid fa-hotel text-green-500 text-xl"></i>
+        <span>Your hotel reservation at Sea View Resort is successful.</span>
+    </li>
+    <li class="bg-yellow-50 border-l-4 border-yellow-400 p-4 flex items-center gap-3 rounded">
+        <i class="fa-solid fa-umbrella-beach text-yellow-500 text-xl"></i>
+        <span>Special offer: 20% off on holiday packages this week!</span>
+    </li>
+</ul>
+{% endblock %}

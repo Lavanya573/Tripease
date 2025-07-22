@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block title %}Bus Booking Confirmed | Tripease{% endblock %} {% block content %}
+<div class="max-w-xl mx-auto py-16 text-center">
+    <div class="bg-green-50 rounded-lg shadow p-8 animate__animated animate__fadeIn">
+        <i class="fa-solid fa-bus text-4xl text-green-600 mb-4"></i>
+        <h1 class="text-3xl font-bold mb-4 text-green-800">Bus Booking Confirmed!</h1>
+        <p class="text-lg mb-4">You have successfully booked the bus <span class="font-semibold">{{ bus.name }}</span> ({{ bus.number }}) from <span class="font-semibold">{{ bus.from_city }}</span> to <span class="font-semibold">{{ bus.to_city }}</span>.</p>
+        <div class="mb-2 text-gray-700">Departure: {{ bus.departure }}</div>
+        <div class="mb-6 text-gray-700">Arrival: {{ bus.arrival }}</div>
+        <a href="/buses/" class="inline-block bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded shadow font-semibold">Back to Buses</a>
+    </div>
+</div>
+{% endblock %}

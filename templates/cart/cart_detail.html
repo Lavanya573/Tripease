@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block title %}Your Cart | Tripease{% endblock %} {% block content %}
+<h1 class="text-2xl font-bold mb-6">Your Cart</h1>
+{% if items %}
+<div class="space-y-4 mb-6">
+    {% for item in items %}
+    <div class="flex items-center bg-gray-50 rounded shadow p-4">
+        <img src="{% if item.room %}https://source.unsplash.com/100x100/?hotel-room,room-{{ item.room.number }}{% elif item.tour_package %}https://source.unsplash.com/100x100/?tourism,{{ item.tour_package.destination }}{% elif item.flight %}https://source.unsplash.com/100x100/?airplane,{{ item.flight.airline }}{% endif %}"
+            alt="Item Image" class="rounded w-20 h-20 object-cover mr-4">
+        <div class="flex-1">
+            {% if item.room %}
+            <div class="font-semibold">Room: {{ item.room }}</div>
+            {% elif item.tour_package %}
+            <div class="font-semibold">Tour Package: {{ item.tour_package }}</div>
+            {% elif item.flight %}
+            <div class="font-semibold">Flight: {{ item.flight.airline }} - {{ item.flight.flight_number }}</div>
+            <div class="text-sm text-gray-600">{{ item.flight.from_city }} to {{ item.flight.to_city }}</div>
+            {% endif %}
+            <div>Quantity: {{ item.quantity }}</div>
+        </div>
+        <form method="post" action="/cart/remove/{{ item.id }}/" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="ml-4 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Remove</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<form method="get" action="/payment/">
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow">Checkout</button>
+</form>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %} {% endblock %}

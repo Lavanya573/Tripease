@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block title %}Support Dashboard | Tripease{% endblock %} {% block content %}
+<div class="max-w-3xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">Support Dashboard</h1>
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Active Chat Sessions</h2>
+        {% if active_sessions %}
+        <table class="w-full table-auto mb-4">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="px-4 py-2 text-left">User</th>
+                    <th class="px-4 py-2 text-left">Started At</th>
+                    <th class="px-4 py-2 text-left">Agent</th>
+                    <th class="px-4 py-2 text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in active_sessions %}
+                <tr class="border-b">
+                    <td class="px-4 py-2">{{ session.user.username }}</td>
+                    <td class="px-4 py-2">{{ session.started_at|date:'Y-m-d H:i' }}</td>
+                    <td class="px-4 py-2">
+                        {% if session.agent %} {{ session.agent.username }} {% else %} Unassigned {% endif %}
+                    </td>
+                    <td class="px-4 py-2">
+                        <a href="{% url 'chat_session' session.id %}" class="bg-blue-600 text-white px-3 py-1 rounded">Join Chat</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="text-center py-8">
+            <p class="text-lg text-gray-600 mb-4">No active chat sessions at the moment.</p>
+            <a href="/chat/start/" class="inline-block bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Start a Test Chat as User</a>
+            <p class="text-sm text-gray-400 mt-2">Ask a user to start a chat, or use the button above in a different browser/user account to test.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

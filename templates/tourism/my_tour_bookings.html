@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %}My Tour Bookings | Tripease{% endblock %} {% block content %}
+<h1 class="text-2xl font-bold mb-6">My Tour Bookings</h1>
+{% if bookings %}
+<div class="space-y-4">
+    {% for booking in bookings %}
+    <div class="bg-gray-50 rounded-lg shadow p-4 flex flex-col md:flex-row md:items-center justify-between">
+        <div>
+            <div class="font-semibold text-lg">{{ booking.tour_package.name }}</div>
+            <div class="text-gray-600">Destination: {{ booking.tour_package.destination }}</div>
+            <div class="text-gray-600">Category: {{ booking.tour_package.get_category_display }}</div>
+            <div class="text-gray-600">Tour Date: {{ booking.tour_date }}</div>
+            <div class="text-gray-600">People: {{ booking.num_people }}</div>
+            <div class="text-gray-500 text-sm">Booked on: {{ booking.booking_date|date:'Y-m-d' }}</div>
+            <div class="text-sm mt-1">
+                Status: <span class="font-medium {% if booking.is_cancelled %}text-red-600{% else %}text-green-600{% endif %}">
+                    {% if booking.is_cancelled %}Cancelled{% else %}Active{% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>You have no tour bookings yet.</p>
+{% endif %} {% endblock %}

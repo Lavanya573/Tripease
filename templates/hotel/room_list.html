@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block title %}Hotels | Tripease{% endblock %} {% block content %}
+<div class="max-w-7xl mx-auto py-8">
+    <h1 class="text-4xl font-bold mb-8 text-center text-blue-800">Hotels </h1>
+    <div class="flex flex-wrap gap-4 justify-center mb-8 border-b pb-2">
+        <button class="tab-btn px-4 py-2 font-semibold text-blue-700 border-b-2 border-blue-700 bg-white">Hotels</button>
+        <!-- <button class="tab-btn px-4 py-2 font-semibold text-gray-600 hover:text-blue-700">All Offers</button> -->
+
+    </div>
+    <form method="get" class="flex flex-wrap gap-4 justify-center mb-8">
+        <select name="room_type" class="border rounded px-3 py-2" onchange="this.form.submit()">
+            <option value="">All Room Types</option>
+            <option value="Single Bed" {% if search.room_type == 'Single Bed' %}selected{% endif %}>Single Bed</option>
+            <option value="Double Bed" {% if search.room_type == 'Double Bed' %}selected{% endif %}>Double Bed</option>
+            <option value="Deluxe" {% if search.room_type == 'Deluxe' %}selected{% endif %}>Deluxe</option>
+        </select>
+        <noscript><button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Filter</button></noscript>
+    </form>
+    <div id="hotels-tab" class="tab-content">
+        {% if rooms %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for room in rooms %}
+            <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center hover:shadow-2xl transition">
+                {% if room.image %}
+                <img src="{{ room.image.url }}" alt="Room Image" class="rounded w-full h-40 object-cover mb-3"> {% else %}
+                <img src="https://source.unsplash.com/400x250/?hotel-room,room-{{ room.number }}" alt="Room Image" class="rounded w-full h-40 object-cover mb-3"> {% endif %}
+                <div class="w-full">
+                    <h2 class="text-lg font-bold mb-1">Room {{ room.number }} ({{ room.room_type }})</h2>
+                    <p class="text-gray-600 mb-1">{{ room.city }}</p>
+                    <p class="text-blue-700 font-semibold mb-1">₹{{ room.price_per_night }} per night</p>
+                    <p class="text-xs text-gray-500 mb-2">Status: <span class="font-medium">{{ room.get_status_display }}</span></p>
+                    <a href="{% url 'hotel_detail' room.id %}" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow block text-center font-semibold">BOOK NOW</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No rooms available.</p>
+        {% endif %}
+    </div>
+    <!-- <div id="offers-tab" class="tab-content hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Offer" class="rounded w-full h-40 object-cover mb-3">
+                <div class="w-full">
+                    <h2 class="text-lg font-bold mb-1">Up to 40% OFF*</h2>
+                    <p class="text-gray-600 mb-1">on Flights, Hotels, Holiday Packages, Cabs</p>
+                    <a href="#" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow block text-center font-semibold">BOOK NOW</a>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center">
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Offer" class="rounded w-full h-40 object-cover mb-3">
+                <div class="w-full">
+                    <h2 class="text-lg font-bold mb-1">Up to 35% OFF*</h2>
+                    <p class="text-gray-600 mb-1">on International Hotels</p>
+                    <a href="#" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow block text-center font-semibold">BOOK NOW</a>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center">
+                <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80" alt="Offer" class="rounded w-full h-40 object-cover mb-3">
+                <div class="w-full">
+                    <h2 class="text-lg font-bold mb-1">Up to 40% OFF*</h2>
+                    <p class="text-gray-600 mb-1">on Hotels in India</p>
+                    <a href="#" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow block text-center font-semibold">BOOK NOW</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Add more tab-content divs for Flights, Holidays, etc. as needed -->
+</div>
+<script>
+    // Simple tab switching logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabBtns.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('text-blue-700', 'border-b-2', 'border-blue-700', 'bg-white'));
+            btn.classList.add('text-blue-700', 'border-b-2', 'border-blue-700', 'bg-white');
+            tabContents.forEach((tab, i) => {
+                tab.classList.toggle('hidden', i !== idx);
+            });
+        });
+    });
+</script>
+{% endblock %}

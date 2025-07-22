@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block title %}Profile | Tripease{% endblock %} {% block content %}
+<h1 class="text-3xl font-bold mb-6">👤 Profile</h1>
+<div class="flex items-center bg-gray-50 rounded shadow p-6 max-w-lg mx-auto">
+    <img src="https://i.pravatar.cc/100?u={{ request.user.username }}" alt="Profile Image" class="rounded-full w-20 h-20 mr-6">
+    <div>
+        <div class="font-semibold text-lg">{{ request.user.username }}</div>
+        <div class="text-gray-600">{{ request.user.email }}</div>
+        <div class="mt-2">
+            <a href="/authentication/edit-profile/" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

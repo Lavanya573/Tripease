@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block title %}Flight Details | Tripease{% endblock %} {% block content %}
+<h1 class="text-2xl font-bold mb-6">Flight Details</h1>
+<div class="bg-gray-50 rounded-lg shadow p-6 mb-6">
+    <div class="mb-2"><span class="font-semibold">Airline:</span> {{ flight.airline }}</div>
+    <div class="mb-2"><span class="font-semibold">Flight Number:</span> {{ flight.flight_number }}</div>
+    <div class="mb-2"><span class="font-semibold">From:</span> {{ flight.from_city }}</div>
+    <div class="mb-2"><span class="font-semibold">To:</span> {{ flight.to_city }}</div>
+    <div class="mb-2"><span class="font-semibold">Departure:</span> {{ flight.departure|date:'Y-m-d H:i' }}</div>
+    <div class="mb-2"><span class="font-semibold">Arrival:</span> {{ flight.arrival|date:'Y-m-d H:i' }}</div>
+    <div class="mb-2"><span class="font-semibold">Price:</span> ₹{{ flight.price }}</div>
+    <div class="mb-2"><span class="font-semibold">Seats Available:</span> {{ flight.seats_available }}</div>
+</div>
+{% if message %}
+<div class="mb-4 p-3 bg-green-100 text-green-800 rounded">{{ message }}</div>
+{% endif %}
+<form method="post" class="bg-blue-50 rounded-lg shadow p-6">
+    {% csrf_token %}
+    <div class="flex flex-col md:flex-row gap-4 mb-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Travel Date</label>
+            <input type="date" name="travel_date" required class="border rounded px-3 py-2 w-full">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Passengers</label>
+            <input type="number" name="num_passengers" min="1" max="{{ flight.seats_available }}" value="1" required class="border rounded px-3 py-2 w-full">
+        </div>
+    </div>
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow">Book this Flight</button>
+</form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block title %}Booking Review | Tripease{% endblock %} {% block content %}
+<div class="max-w-xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">Booking Confirmation</h1>
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-2">{{ type }} Booking Details</h2>
+        <div class="mb-4">
+            {% if type == 'Room' %}
+            <p><strong>Room:</strong> {{ booking.room }}</p>
+            <p><strong>Check-in:</strong> {{ booking.check_in }}</p>
+            <p><strong>Check-out:</strong> {{ booking.check_out }}</p>
+            {% elif type == 'Cab' %}
+            <p><strong>Cab:</strong> {{ booking.cab }}</p>
+            <p><strong>Travel Date:</strong> {{ booking.travel_date }}</p>
+            {% elif type == 'Train' %}
+            <p><strong>Train:</strong> {{ booking.train }}</p>
+            <p><strong>Travel Date:</strong> {{ booking.travel_date }}</p>
+            {% elif type == 'Holiday' %}
+            <p><strong>Holiday:</strong> {{ booking.holiday }}</p>
+            <p><strong>Travel Date:</strong> {{ booking.travel_date }}</p>
+            <p><strong>Number of People:</strong> {{ booking.num_people }}</p>
+            {% elif type == 'Flight' %}
+            <p><strong>Flight:</strong> {{ booking.flight }}</p>
+            <p><strong>Travel Date:</strong> {{ booking.travel_date }}</p>
+            <p><strong>Passengers:</strong> {{ booking.num_passengers }}</p>
+            {% endif %}
+        </div>
+        <div class="mt-4">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded shadow">Confirm Booking</button>
+            </form>
+            <a href="/hotel/my-bookings/" class="ml-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow">View My Bookings</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

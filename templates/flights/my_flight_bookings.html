@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block title %}My Flight Bookings | Tripease{% endblock %} {% block content %}
+<h1 class="text-2xl font-bold mb-6">My Flight Bookings</h1>
+{% if bookings %}
+<div class="space-y-4">
+    {% for booking in bookings %}
+    <div class="bg-gray-50 rounded-lg shadow p-4 flex flex-col md:flex-row md:items-center justify-between">
+        <div>
+            <div class="font-semibold text-lg">{{ booking.flight.airline }} {{ booking.flight.flight_number }}</div>
+            <div class="text-gray-600">From: {{ booking.flight.from_city }} → To: {{ booking.flight.to_city }}</div>
+            <div class="text-gray-600">Departure: {{ booking.flight.departure|date:'Y-m-d H:i' }}</div>
+            <div class="text-gray-600">Arrival: {{ booking.flight.arrival|date:'Y-m-d H:i' }}</div>
+            <div class="text-gray-600">Travel Date: {{ booking.travel_date }}</div>
+            <div class="text-gray-600">Passengers: {{ booking.num_passengers }}</div>
+            <div class="text-gray-500 text-sm">Booked on: {{ booking.booking_date|date:'Y-m-d H:i' }}</div>
+            <div class="text-sm mt-1">
+                Status: <span class="font-medium {% if booking.is_cancelled %}text-red-600{% else %}text-green-600{% endif %}">
+                    {% if booking.is_cancelled %}Cancelled{% else %}Active{% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>You have no flight bookings yet.</p>
+{% endif %} {% endblock %}

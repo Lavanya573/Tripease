@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% block title %}My Bookings | Tripease{% endblock %} {% block content %}
+<h1 class="text-2xl font-bold mb-6">My Bookings</h1>
+
+<!-- Hotel Bookings -->
+{% if hotel_bookings %}
+<h2 class="text-xl font-semibold mt-8 mb-2">Hotel Room Bookings</h2>
+<div class="space-y-4">
+    {% for booking in hotel_bookings %}
+    <div class="bg-gray-50 rounded-lg shadow p-4 flex flex-col md:flex-row md:items-center justify-between">
+        <div>
+            <div class="font-semibold text-lg">Room {{ booking.room.number }} ({{ booking.room.room_type }})</div>
+            <div class="text-gray-600">City: {{ booking.room.city }}</div>
+            <div class="text-gray-600">Check-in: {{ booking.check_in }} | Check-out: {{ booking.check_out }}</div>
+            <div class="text-gray-500 text-sm">Booked on: {{ booking.created_at|date:'Y-m-d H:i' }}</div>
+        </div>
+        <form method="post" action="?cancel={{ booking.id }}" class="mt-4 md:mt-0">
+            {% csrf_token %}
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow">Cancel Booking</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Cab Bookings -->
+{% if cab_bookings %}
+<h2 class="text-xl font-semibold mt-8 mb-2">Cab Bookings</h2>
+<div class="space-y-4">
+    {% for booking in cab_bookings %}
+    <div class="bg-gray-50 rounded-lg shadow p-4 flex flex-col md:flex-row md:items-center justify-between">
+        <div>
+            <div class="font-semibold text-lg">Cab: {{ booking.cab.name }} ({{ booking.cab.number }})</div>
+            <div class="text-gray-600">From: {{ booking.cab.from_city }} → To: {{ booking.cab.to_city }}</div>
+            <div class="text-gray-600">Travel Date: {{ booking.travel_date }}</div>
+            <div class="text-gray-500 text-sm">Booked on: {{ booking.created_at|date:'Y-m-d H:i' }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Holiday Bookings -->
+{% if holiday_bookings %}
+<h2 class="text-xl font-semibold mt-8 mb-2">Holiday Bookings</h2>
+<div class="space-y-4">
+    {% for booking in holiday_bookings %}
+    <div class="bg-gray-50 rounded-lg shadow p-4 flex flex-col md:flex-row md:items-center justify-between">
+        <div>
+            <div class="font-semibold text-lg">Holiday: {{ booking.tour_package.name }}</div>
+            <div class="text-gray-600">Destination: {{ booking.tour_package.destination }}</div>
+            <div class="text-gray-600">Tour Date: {{ booking.tour_date }}</div>
+            <div class="text-gray-600">People: {{ booking.num_people }}</div>
+            <div class="text-gray-500 text-sm">Booked on: {{ booking.created_at|date:'Y-m-d H:i' }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Flight Bookings -->
+{% if flight_bookings %}
+<h2 class="text-xl font-semibold mt-8 mb-2">Flight Bookings</h2>
+<div class="space-y-4">
+    {% for booking in flight_bookings %}
+    <div class="bg-gray-50 rounded-lg shadow p-4 flex flex-col md:flex-row md:items-center justify-between">
+        <div>
+            <div class="font-semibold text-lg">Flight: {{ booking.flight.airline }} {{ booking.flight.flight_number }}</div>
+            <div class="text-gray-600">From: {{ booking.flight.from_city }} → To: {{ booking.flight.to_city }}</div>
+            <div class="text-gray-600">Travel Date: {{ booking.travel_date }}</div>
+            <div class="text-gray-600">Passengers: {{ booking.num_passengers }}</div>
+            <div class="text-gray-500 text-sm">Booked on: {{ booking.created_at|date:'Y-m-d H:i' }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %} {% if not hotel_bookings and not cab_bookings and not holiday_bookings and not flight_bookings %}
+<p>You have no bookings yet.</p>
+{% endif %} {% endblock %}

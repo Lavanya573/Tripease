@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block title %}Your Notifications | Tripease{% endblock %} {% block content %}
+<h1 class="text-2xl font-bold mb-6">Your Notifications</h1>
+{% if notifications %}
+<div class="space-y-4">
+    {% for notification in notifications %}
+    <div class="flex items-center bg-gray-50 rounded shadow p-4">
+        <span class="mr-4">
+                    {% if notification.is_read %}
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                    {% else %}
+                        <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01" /></svg>
+                    {% endif %}
+                </span>
+        <div class="flex-1">
+            <div>{{ notification.message }}</div>
+            <div class="text-xs text-gray-500">Date: {{ notification.created_at|date:'Y-m-d H:i' }}</div>
+        </div>
+        <span class="ml-4 px-2 py-1 rounded text-xs {% if notification.is_read %}bg-green-100 text-green-700{% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                    {% if notification.is_read %}Read{% else %}Unread{% endif %}
+                </span>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No notifications found.</p>
+{% endif %} {% endblock %}

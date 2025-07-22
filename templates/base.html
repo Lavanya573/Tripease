@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}Tripease{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" /> {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header with logo, site name, and navigation -->
+    <header class="bg-white/80 backdrop-blur-md shadow sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-2 flex items-center h-14">
+            <ul class="flex flex-row items-center gap-x-4 w-full text-base">
+                <li class="flex items-center space-x-1">
+                    <img src="https://imgak.mmtcdn.com/pwa_v3/pwa_commons_assets/desktop/logo@2x.png" alt="Tripease" class="h-8 transition-transform hover:scale-110 animate__animated animate__fadeInLeft">
+                    <span class="text-xl font-bold text-blue-800">Tripease</span>
+                </li>
+                <li><a href="/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">🏠 Home</a></li>
+                <li><a href="/flights/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">✈️ Flights</a></li>
+                <li><a href="/hotel/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">🏨 Hotels</a></li>
+                <li><a href="/holidays/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">🌴 Holidays</a></li>
+                <li><a href="/cabs/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">🚕 Cabs</a></li>
+                <li><a href="/cart/" class="text-gray-700 hover:text-pink-600 font-semibold transition hover:underline flex items-center gap-2">❤️ Wishlist</a></li>
+                <li><a href="/hotel/my-bookings/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">📄 My Bookings</a></li>
+                <li><a href="/hotel/my-payments/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">💳 My Payments {% if recent_payments > 0 %}<span class="bg-blue-600 text-white text-xs rounded-full px-2 py-1">{{ recent_payments }}</span>{% endif %}</a></li>
+                <li><a href="/notifications/" class="text-gray-700 hover:text-yellow-600 font-semibold transition hover:underline flex items-center gap-2">🔔 Notifications {% if unread_notifications > 0 %}<span class="bg-yellow-500 text-white text-xs rounded-full px-2 py-1">{{ unread_notifications }}</span>{% endif %}</a></li>
+                <li><a href="/authentication/profile/" class="text-gray-700 hover:text-blue-600 font-semibold transition hover:underline flex items-center gap-2">👤 Profile</a></li>
+                <!-- <li><a href="/cart/" class="text-gray-700 hover:text-green-600 font-semibold transition hover:underline flex items-center gap-2">🛒 Cart</a></li> -->
+                <li><a href="/chat/start/" class="text-gray-700 hover:text-green-600 font-semibold transition hover:underline flex items-center gap-2">💬 Live Chat</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="/authentication/logout/" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 font-semibold flex items-center gap-2">🚪 Logout</a></li>
+                {% else %}
+                <li><a href="/authentication/login/" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 font-semibold flex items-center gap-2">👤 Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <script>
+            // Mobile nav toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            navToggle && navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+            });
+        </script>
+    </header>
+    <!-- Hero Banner Image (overridable) -->
+    {% block hero_image %} {% if request.path == '/' %}
+    <div class="w-full h-64 md:h-96 bg-gradient-to-r from-blue-400 to-green-300 flex items-center justify-center mb-8 relative animate__animated animate__fadeInDown">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Travel Banner" class="absolute inset-0 w-full h-full object-cover opacity-70 rounded-b-lg">
+        <div class="relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-white drop-shadow-lg mb-4">Explore the World with Tripease</h1>
+            <p class="text-lg md:text-2xl text-white drop-shadow">Book flights, hotels, holidays, and more—all in one place.</p>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row gap-6 justify-between items-stretch mb-8">
+            <!-- Offers Carousel -->
+            <div class="flex-1 bg-gradient-to-br from-blue-700 via-cyan-400 to-emerald-400 rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center animate__animated animate__zoomIn animate__delay-1s">
+                <span class="inline-block animate-spin-slow bg-gradient-to-tr from-blue-400 to-cyan-300 rounded-full p-4 mb-3 shadow-lg">
+                    <i class="fa-solid fa-tags text-4xl text-white"></i>
+                </span>
+                <h2 class="text-2xl font-extrabold text-white mb-2 tracking-wide drop-shadow">Offers Carousel</h2>
+            </div>
+            <!-- Popular Destinations -->
+            <div class="flex-1 bg-gradient-to-br from-emerald-400 via-cyan-300 to-blue-600 rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center animate__animated animate__fadeInUpBig animate__delay-2s">
+                <span class="inline-block animate-bounce bg-gradient-to-tr from-cyan-400 to-emerald-300 rounded-full p-4 mb-3 shadow-lg">
+                    <i class="fa-solid fa-location-dot text-4xl text-white"></i>
+                </span>
+                <h2 class="text-2xl font-extrabold text-white mb-2 tracking-wide drop-shadow">Popular Destinations</h2>
+            </div>
+            <!-- App Download -->
+            <div class="flex-1 bg-gradient-to-br from-cyan-500 via-blue-700 to-emerald-400 rounded-2xl shadow-2xl p-8 flex flex-col items-center justify-center animate__animated animate__lightSpeedInRight animate__delay-3s">
+                <span class="inline-block animate-pulse bg-gradient-to-tr from-blue-500 to-emerald-400 rounded-full p-4 mb-3 shadow-lg">
+                    <i class="fa-solid fa-mobile-screen-button text-4xl text-white"></i>
+                </span>
+                <h2 class="text-2xl font-extrabold text-white mb-2 tracking-wide drop-shadow">App Download</h2>
+            </div>
+        </div>
+    </div>
+    <style>
+        @keyframes spin-slow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .animate-spin-slow {
+            animation: spin-slow 3s linear infinite;
+        }
+    </style>
+    {% endif %} {% endblock %}
+    <main class="max-w-5xl mx-auto mt-4 p-3 bg-white rounded-lg shadow min-h-[60vh] animate__animated animate__fadeInUp text-base">
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="p-3 rounded-lg shadow-md
+                        {% if message.tags == 'success' %} bg-green-100 text-green-800 {% endif %}
+                        {% if message.tags == 'error' %} bg-red-100 text-red-800 {% endif %}
+                        {% if message.tags == 'warning' %} bg-yellow-100 text-yellow-800 {% endif %}
+                        {% if message.tags == 'info' %} bg-blue-100 text-blue-800 {% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %} {% block content %}{% endblock %}
+        <!-- Floating Action Button Example -->
+        <!-- Removed plus button -->
+    </main>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-200 mt-12 py-8 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <span class="text-2xl font-bold text-blue-400">Tripease</span>
+                <p class="mt-2 text-gray-400">&copy; {{ now|date:'Y' }} Tripease. All rights reserved.</p>
+            </div>
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div>
+                    <h4 class="font-semibold mb-2">Contact</h4>
+                    <p>Email: <a href="mailto:your@email.com" class="text-blue-400 hover:underline">tripease@email.com</a></p>
+                    <p>Phone: <a href="tel:+1234567890" class="text-blue-400 hover:underline">+1 234 567 890</a></p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">Connect</h4>
+                    <a href="https://www.linkedin.com/in/your-linkedin/" target="_blank" class="inline-block mr-3 text-blue-400 hover:text-blue-600 text-xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/your-github" target="_blank" class="inline-block mr-3 text-gray-400 hover:text-white text-xl"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com/your-twitter" target="_blank" class="inline-block text-blue-400 hover:text-blue-600 text-xl"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">Links</h4>
+                    <ul>
+                        <li><a href="/about/" class="hover:underline">About</a></li>
+                        <li><a href="/contact/" class="hover:underline">Contact</a></li>
+                        <li><a href="/privacy/" class="hover:underline">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:underline">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+ {% extends 'base.html' %} {% block title %}Book Cab | Tripease{% endblock %} {% block content %}
+<div class="max-w-xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">Book Cab</h1>
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-2">Cab Details</h2>
+        <p><strong>Name:</strong> {{ cab.name }}</p>
+        <p><strong>Number:</strong> {{ cab.number }}</p>
+        <p><strong>From:</strong> {{ cab.from_city }}</p>
+        <p><strong>To:</strong> {{ cab.to_city }}</p>
+        <p><strong>Departure:</strong> {{ cab.departure }}</p>
+        <p><strong>Arrival:</strong> {{ cab.arrival }}</p>
+
+        <form method="post" class="mt-6">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="travel_date" class="block text-gray-700 font-semibold mb-2">Travel Date</label>
+                <input type="date" name="travel_date" id="travel_date" class="w-full px-3 py-2 border rounded-lg" required>
+            </div>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow">Book Now</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

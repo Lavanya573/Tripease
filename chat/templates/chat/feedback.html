@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block title %}Chat Feedback | Tripease{% endblock %} {% block content %}
+<div class="max-w-lg mx-auto py-12">
+    <h1 class="text-2xl font-bold mb-4">Rate Your Support Experience</h1>
+    <form method="post" class="bg-white rounded-lg shadow p-6">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block font-semibold mb-2">How would you rate your chat experience?</label> {{ form.rating }}
+        </div>
+        <div class="mb-4">
+            <label class="block font-semibold mb-2">Additional Comments</label> {{ form.comments }}
+        </div>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded">Submit Feedback</button>
+    </form>
+</div>
+{% endblock %}

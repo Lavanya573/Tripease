@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block title %}Tour Booking Confirmation | Tripease{% endblock %} {% block content %}
+<div class="max-w-xl mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">Tour Booking Confirmation</h1>
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-2">Tour Package: {{ booking.tour_package.name }}</h2>
+        <p class="mb-2"><strong>Destination:</strong> {{ booking.tour_package.destination }}</p>
+        <p class="mb-2"><strong>Category:</strong> {{ booking.tour_package.get_category_display }}</p>
+        <p class="mb-2"><strong>Tour Date:</strong> {{ booking.tour_date }}</p>
+        <p class="mb-2"><strong>Number of People:</strong> {{ booking.num_people }}</p>
+        <p class="mb-2"><strong>Booked on:</strong> {{ booking.booking_date }}</p>
+        <div class="mt-4">
+            <a href="/tourism/bookings/" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow">View My Tour Bookings</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

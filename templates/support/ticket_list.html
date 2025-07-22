@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block title %}Your Support Tickets | Tripease{% endblock %} {% block content %}
+<h1 class="text-2xl font-bold mb-6">Your Support Tickets</h1>
+{% if tickets %}
+<div class="space-y-4">
+    {% for ticket in tickets %}
+    <div class="bg-gray-50 rounded shadow p-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="font-semibold">Subject: {{ ticket.subject }}</div>
+                <div class="text-gray-600 text-sm">{{ ticket.message }}</div>
+                <div class="text-xs text-gray-500 mt-1">Date: {{ ticket.created_at|date:'Y-m-d H:i' }}</div>
+            </div>
+            <span class="ml-4 px-2 py-1 rounded text-xs {% if ticket.is_resolved %}bg-green-100 text-green-700{% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                        {% if ticket.is_resolved %}Resolved{% else %}Open{% endif %}
+                    </span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No support tickets found.</p>
+{% endif %} {% endblock %}

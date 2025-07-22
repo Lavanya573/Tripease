@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block title %}Offers | Tripease{% endblock %} {% block content %}
+<h1 class="text-3xl font-bold mb-6">🎉 Offers</h1>
+<p class="mb-8">Check out the latest offers and discounts on flights, hotels, holidays, and more!</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for offer in offers %}
+    <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center">
+        {% if offer.image %}
+        <img src="{{ offer.image.url }}" alt="Offer" class="rounded w-full h-40 object-cover mb-3"> {% else %}
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Offer" class="rounded w-full h-40 object-cover mb-3"> {% endif %}
+        <h2 class="text-lg font-bold mb-1">{{ offer.title }}</h2>
+        <p class="text-gray-600 mb-1">{{ offer.description }}</p>
+        <a href="#" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow block text-center font-semibold">BOOK NOW</a>
+    </div>
+    {% empty %}
+    <p class="col-span-3 text-center text-gray-500">No offers available at the moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}

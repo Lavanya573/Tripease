@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block title %}Cabs | Tripease{% endblock %} {% block content %}
+<div class="max-w-5xl mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8 text-center flex items-center justify-center gap-2"><i class="fa-solid fa-taxi text-yellow-500"></i> Cabs</h1>
+    <form method="get" class="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-blue-50 p-4 rounded-lg shadow">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
+            <input type="text" name="from_city" value="{{ request.GET.from_city }}" class="w-full border rounded px-3 py-2" placeholder="Departure city">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
+            <input type="text" name="to_city" value="{{ request.GET.to_city }}" class="w-full border rounded px-3 py-2" placeholder="Arrival city">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+            <input type="date" name="date" value="{{ request.GET.date }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div class="md:col-span-4 flex justify-end">
+            <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded font-semibold">Search</button>
+        </div>
+    </form>
+    {% if request.GET.from_city or request.GET.to_city or request.GET.date %} {% if cabs %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for cab in cabs %}
+        <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center hover:shadow-2xl hover:scale-105 transition-all animate__animated animate__fadeInUp group">
+            <div class="flex items-center gap-3 mb-2">
+                <i class="fa-solid fa-taxi text-2xl text-yellow-500 group-hover:text-yellow-600"></i>
+                <span class="text-xl font-semibold">{{ cab.name }}</span>
+            </div>
+            <div class="text-gray-600 mb-1">Cab No: <span class="font-mono">{{ cab.number }}</span></div>
+            <div class="text-gray-700 mb-1 flex items-center gap-2"><i class="fa-solid fa-location-dot"></i> {{ cab.from_city }} <i class="fa-solid fa-arrow-right"></i> {{ cab.to_city }}</div>
+            <div class="text-gray-500 mb-1 flex items-center gap-2"><i class="fa-solid fa-clock"></i> Departure: {{ cab.departure }}</div>
+            <div class="text-gray-500 flex items-center gap-2"><i class="fa-solid fa-clock"></i> Arrival: {{ cab.arrival }}</div>
+            <a href="{% url 'book_cab' cab.id %}" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow font-semibold flex items-center gap-2 transition-all group-hover:scale-105">Book Now <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-lg text-red-600 text-center">No cabs found for your search.</p>
+    {% endif %} {% else %}
+    <p class="text-lg text-gray-600 text-center">Please use the search form above to find cabs.</p>
+    {% endif %}
+</div>
+{% endblock %}
