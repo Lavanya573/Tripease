@@ -21,14 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pf^p8*gatgan#lyt^nf=w0x!5zd%s*k&cu+#hg&(9stk8hu7bw'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'insecure-default-secret-key')
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS=[]
-# Application definition
+# ALLOWED_HOSTS=[]
+# # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -88,22 +91,22 @@ ASGI_APPLICATION = 'tripease_backend.asgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # DATABASES = {
-#     'default': {
-#
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'triploease_db',
-#         'USER': 'postgres',
-#         'PASSWORD': 'admin',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'triploease_db',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 
 
